@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{layout :: setFragment(~{this::content})}">
     <th:block th:fragment="content">
+        <th:blick th:with="bvo=${bdto.bvo}">
         <div class="container-sm">
             <h1>Board Detail Page</h1>
             <form action="/board/modify" method="post" id="modForm">
@@ -30,6 +31,31 @@
                               class="form-control" readonly>[[${bvo.content}]]
                     </textarea>
                 </div>
+                    <!--파일 출력 라인-->
+                <div class="mb-3">
+                    <ul class="list-group list-group-flush">
+                        <li th:each="fvo : ${bdto.flist}" class="list-group-item">
+                            <div th:if="${fvo.file_type > 0}" class="ms-2 me-auto" >
+                                <img th:src="@{|/upload/${fvo.save_dir}/${fvo.uuid}_th_${fvo.file_name}|}">
+                            </div>
+                            <div th:unless="${fvo.file_type > 0}" class="ms-2 me-auto">
+                                <!-- 파일모양아이콘 -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg>
+                            </div>
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">[[${fvo.file_name}]] </div>
+                                [[${fvo.reg_date}]]
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
                 <button type="button" id="listBtn" class="btn btn-outline-primary">List</button>
                 <!-- detail page 에서 modify 상태로 변경하기 위한 버튼 -->
                 <button type="button" id="modBtn"  class="btn btn-outline-warning">Modify</button>
@@ -41,6 +67,7 @@
             </form>
         </div>
         <script th:src="@{/js/boardDetail.js}"></script>
+        </th:blick>
     </th:block>
 
 </th:block>
