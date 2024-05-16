@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{layout :: setFragment(~{this::content})}">
+    <th:block th:fragment="content">
+        <div class="badge text-bg-primary text-wrap">
+            <h1>Member Join Page</h1>
+            <form action="/member/register" method="post">
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="example@test.com...">
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="pwd" class="form-label">PassWord</label>
+                    <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Password...">
+                </div>
+
+                <div class="mb-3">
+                    <label for="nickName" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="nickName" id="nickName" placeholder="Name...">
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">JOIN</button>
+
+            </form>
+        </div>
+    </th:block>
+</th:block>

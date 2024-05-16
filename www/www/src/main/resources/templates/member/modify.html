@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{layout :: setFragment(~{this::content})}">
+    <th:block th:fragment="content">
+        <div class="container-md " >
+
+            <h1>User Member List</h1>
+        <form action="/member/modify" method="post">
+
+
+            <div class="container text-center">
+
+
+
+                    <div class="row">
+
+
+                        <th:block sec:authorize="isAuthenticated()" >
+
+                            <div class="col" th:with="auth=${#authentication.getPrincipal()}">
+                                <div class="card text-bg-dark mb-3 border-warning mb-3" style="width: 25rem;">
+                                    <img src="/img/userImg.png" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <input type="hidden"  name="email" th:value="${auth.mvo.email}">
+                                        <h5 class="card-title">닉네임 : <input  type="text" name="nickName" th:value="${auth.mvo.nickName}"></h5>
+                                        <p class="card-title" >이메일 : [[${auth.mvo.email }]]</p>
+                                        <h5 class="card-title">비밀번호 : <input  type="text" name="pwd" placeholder="보안처리된 비밀번호"></h5>
+
+                                        <span class="card-title">
+                                            [[${auth.mvo.authList }]]
+                                        </span>
+
+                                        <p class="card-text" >아이디 생성일 : [[${auth.mvo.regAt}]]</p>
+                                        <p class="card-text" >마지막 접속일 : [[${auth.mvo.lastLogin}]]</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </th:block>
+
+
+                    </div>
+
+            </div>
+            <a><button type="submit" class="btn btn-warning" id="updateBtn">수정</button></a>
+            <a href="/board/list"><button type="button" class="btn btn-primary">BoardList</button></a>
+            <button type="button" class="btn btn-danger" id="deleteBtn">회원삭제</button>
+            </form>
+        </div>
+
+    </th:block>
+</th:block>
