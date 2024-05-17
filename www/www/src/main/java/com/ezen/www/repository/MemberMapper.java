@@ -22,4 +22,8 @@ public interface MemberMapper {
     List<MemberVO> getList();
 
     void memberPwdModify(MemberVO mvo);
+
+    void memberAuthDelete(String email);
+
+    void memberDelete(String email);
 }

@@ -31,5 +31,11 @@
     <update id="memberPwdModify">
         UPDATE member SET nick_name = #{nickName}, pwd = #{pwd}, last_login = NOW() WHERE email = #{email}
     </update>
+    <delete id="memberAuthDelete">
+        DELETE FROM auth_member WHERE email = #{email}
+    </delete>
+    <delete id="memberDelete">
+        DELETE FROM member WHERE email = #{email}
+    </delete>
 
 </mapper>

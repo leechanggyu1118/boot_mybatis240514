@@ -12,4 +12,8 @@ public interface MemberService {
     void memberModify(MemberVO mvo);
 
     void memberPwdModify(MemberVO mvo);
+
+    void memberAuthDelete(String email);
+
+    void memberDelete(String email);
 }

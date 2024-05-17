@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{layout :: setFragment(~{this::content})}">
-    <th:block th:fragment="content">
+    <th:block th:fragment="content" th:with="auth=${#authentication.getPrincipal()}">
         <th:blick th:with="bvo=${bdto.bvo}">
         <div class="container-sm">
             <h1>Board Detail Page</h1>
@@ -65,8 +65,64 @@
                 <input type="hidden" name="bno" th:value="${bvo.bno}">
 
             </form>
+            <!--comment Line-->
+            <!-- post -->
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="cmtWriter">[[${auth.mvo.nickName}]]</span>
+                <input type="text" id="cmtText" class="form-control"
+                       placeholder="Add Comment..." aria-label="Username"
+                       aria-describedby="basic-addon1">
+                <button type="button" id="cmtAddBtn" class="btn btn-success">Post</button>
+            </div>
+
+            <!-- spread-->
+            <ul class="list-group list-group-flush" id="cmtListArea">
+            <li class="list-group-item">
+                <div class="input-group mb-3">
+                    <div class="fw-bold">Writer</div>
+                    Content
+                </div>
+                <span class="badge rounded-pill text-bg-warning">regDate</span>
+            </li>
+            </ul>
+
+
+            <!-- 댓글 더보기 버튼  -->
+            <div>
+                <button type="button" id="moreBtn" data-page="1" class="btn btn-dark" style="visibility: hidden">More +</button>
+            </div>
+            <!-- 모달창 라인  -->
+            <div class="modal" id="myModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content text-bg-secondary">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modWriter">댓글 수정하기</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control" id="cmtTextMod">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" id="cmtDelBtn">Close</button>
+                            <button type="button" class="btn btn-primary"  id="cmtModBtn">Modify</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
+            <script th:inline="javascript">
+                const bnoVal = [[${bvo.bno}]];
+                console.log(bnoVal);
+                const authNick = [[${auth.mvo.nickName}]];
+
+            </script>
         <script th:src="@{/js/boardDetail.js}"></script>
+        <script th:src="@{/js/boardComment.js}"></script>
+            <script>
+                spreadCommentList(bnoVal);
+            </script>
         </th:blick>
     </th:block>
 

@@ -2,7 +2,6 @@ package com.ezen.www.controller;
 
 import com.ezen.www.domain.MemberVO;
 import com.ezen.www.service.MemberService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.security.Security;
 
 @Controller
 @RequestMapping("/member/*")
@@ -52,6 +50,16 @@ public class MemberController {
     @GetMapping("/modify")
     public void modify(){}
 
+    private void logout(HttpServletRequest request, HttpServletResponse response){
+        Authentication authentication =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+        new SecurityContextLogoutHandler()
+                .logout(request, response, authentication);
+    }
+
 
 
     @PostMapping("/modify")
@@ -72,15 +80,17 @@ public class MemberController {
         return "redirect:/";
     }
 
-    private void logout(HttpServletRequest request, HttpServletResponse response){
-        Authentication authentication =
-                SecurityContextHolder
-                        .getContext()
-                        .getAuthentication();
+    @GetMapping("/deleteMember")
+    public String deleteMember(Principal principal, HttpServletRequest request, HttpServletResponse response) {
+        String email = principal.getName(); //id
 
-        new SecurityContextLogoutHandler()
-                .logout(request, response, authentication);
+        msv.memberAuthDelete(email);
+        msv.memberDelete(email);
+        logout(request, response);
+        return "redirect:/";
     }
+
+
 
 
 

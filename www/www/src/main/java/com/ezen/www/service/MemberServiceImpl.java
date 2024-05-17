@@ -40,4 +40,14 @@ public class MemberServiceImpl implements MemberService {
     public void memberPwdModify(MemberVO mvo) {
         memberMapper.memberPwdModify(mvo);
     }
+
+    @Override
+    public void memberAuthDelete(String email) {
+        memberMapper.memberAuthDelete(email);
+    }
+
+    @Override
+    public void memberDelete(String email) {
+        memberMapper.memberDelete(email);
+    }
 }
